@@ -1,0 +1,31 @@
+language: nodejs
+
+node_js:
+  - 4.2.3
+
+env:
+  global:
+    # replace with your docker registry account name (e.g. Amazon ECR)
+    - DOCKER_ACC=288971733297.dkr.ecr.us-east-1.amazonaws.com
+    - DOCKER_REPO_NODE_APP=docker-multiple-container-eb-node
+    - DOCKER_REPO_TOMCAT_APP=docker-multiple-container-eb-tomcat
+    - AWS_DEFAULT_REGION=us-east-1
+
+build:
+  ci:
+    # build docker images and push to registry
+    # Node app
+    - docker build -t $DOCKER_ACC/$DOCKER_REPO_NODE_APP:$BRANCH.$BUILD_NUMBER $SHIPPABLE_BUILD_DIR
+    - docker push $DOCKER_ACC/$DOCKER_REPO_NODE_APP:$BRANCH.$BUILD_NUMBER
+    # Tomcat app
+    - docker build -t $DOCKER_ACC/$DOCKER_REPO_TOMCAT_APP:$BRANCH.$BUILD_NUMBER $SHIPPABLE_BUILD_DIR
+    - docker push $DOCKER_ACC/$DOCKER_REPO_TOMCAT_APP:$BRANCH.$BUILD_NUMBER
+
+  on_success:
+    # save latest image versions to state
+    - echo versionName=$BRANCH.$BUILD_NUMBER > /build/state/demo_java_ecr_img.env
+
+integrations:
+  hub:
+    - integrationName: ttrahan-ecr
+      type: ecr
