@@ -1,14 +1,14 @@
 resources:
 # gitRepo for scripts/config files
-  - name: demo_java_ecr_gitrepo
+  - name: docker_multi_container_eb_gitrepo
     type: gitRepo
     integration: ttrahan-gh
     pointer:
-      sourceName: shippableSamples/java-ecr-runcli-elasticbeanstalk
+      sourceName: ttrahan/docker-multi-container-eb
       branch: master
   
 # docker image resource
-  - name: demo_java_ecr_img
+  - name: docker_multi_container_eb_img
     type: image
     integration: ttrahan-ecr
     pointer:
@@ -18,22 +18,22 @@ resources:
       versionName: master.5
 
 # aws CLI config
-  - name: demo_java_ecr_awscli
+  - name: docker_multi_container_eb_awscli
     type: cliConfig
     integration: ttrahan-aws
     pointer:
       region: us-east-1
 
 # params shared across for all environments 
-  - name: demo_java_ecr_params
+  - name: docker_multi_container_eb_params
     type: params
     version:
       params:
-        AWS_EB_APPLICATION: "demo_java_ecr"
+        AWS_EB_APPLICATION: "docker_multi_container_eb"
         PORT: 8080
 
 # params for TEST environment 
-  - name: demo_java_ecr_params_test
+  - name: docker_multi_container_eb_params_test
     type: params
     version:
       params:
@@ -41,7 +41,7 @@ resources:
         AWS_EB_ENVIRONMENT: "demoJavaEcr-test"
 
 # params for PROD environment 
-  - name: demo_java_ecr_params_prod
+  - name: docker_multi_container_eb_params_prod
     type: params
     version:
       params:

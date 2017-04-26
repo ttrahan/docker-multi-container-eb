@@ -23,7 +23,7 @@ build:
 
   on_success:
     # save latest image versions to state
-    - echo versionName=$BRANCH.$BUILD_NUMBER > /build/state/docker_multi-container_eb_img.env
+    - echo versionName=$BRANCH.$BUILD_NUMBER > /build/state/docker_multi_container_eb_img.env
 
 integrations:
   hub:
