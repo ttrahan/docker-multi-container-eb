@@ -6,7 +6,8 @@ jobs:
   - name: eb-docker-multi-container_runCI
     type: runCI
     steps:
-      - OUT: eb_docker_multi_container_img
+      - OUT: eb_docker_multi_container_img_node
+      - OUT: eb_docker_multi_container_img_tomcat
 
 # runCLI job that deploys image in ECR to Elastic Beanstalk - TEST
   - name: eb_docker_multi_container_test_deploy
