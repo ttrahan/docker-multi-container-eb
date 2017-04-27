@@ -28,9 +28,10 @@ jobs:
             IMAGE_TAG_NODE=$EB_DOCKER_MULTI_CONTAINER_IMG_NODE_VERSIONNAME
             IMAGE_REPO_TOMCAT=$EB_DOCKER_MULTI_CONTAINER_IMG_TOMCAT_SOURCENAME 
             IMAGE_TAG_TOMCAT=$EB_DOCKER_MULTI_CONTAINER_IMG_TOMCAT_VERSIONNAME
-            ENVIRONMENT=$EB_DOCKER_MULTI_CONTAINER_PARAMS_TEST_PARAMS_ENVIRONMENT
+            EB_APPLICATION=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PARAMS_AWS_EB_APPLICATION
             PORT_NODE=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PORT_NODE
             PORT_TOMCAT=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PORT_TOMCAT
+            ENVIRONMENT=$EB_DOCKER_MULTI_CONTAINER_PARAMS_TEST_PARAMS_ENVIRONMENT
         # update template files with values in env variables
         - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE/deploy
         - script: pwd
@@ -38,12 +39,13 @@ jobs:
         - script: shippable_replace Dockerrun.aws.json .ebextensions/environmentvariables.config
         # initialize eb cli for app eb_docker_multi_container_eb
         - script: echo "initializing EB"
-        - script: eb init eb_docker_multi_container_eb --platform docker-1.12.6 --region us-east-1 --keyname kp-us-east-1
+        - script: eb init $EB_APPLICATION --platform docker-1.12.6 --region us-east-1 --keyname kp-us-east-1
         # deploy latest image to elastic beanstalk
         - script: echo "Deploying new version to Elastic Beanstalk"
         - script: eb deploy $EB_DOCKER_MULTI_CONTAINER_PARAMS_TEST_PARAMS_AWS_ENVIRONMENT
         # save latest deployment to state
-        - script: echo -e "IMAGE_REPO=$IMAGE_REPO\nIMAGE_TAG=$IMAGE_TAG" >> $EB_DOCKER_MULTI_CONTAINER_TEST_DEPLOY_STATE/latest_test_deploy.env
+        - script: echo -e "IMAGE_NODE=$IMAGE_REPO_NODE\nIMAGE_TAG_NODE=$IMAGE_TAG" >> $EB_DOCKER_MULTI_CONTAINER_TEST_DEPLOY_STATE/latest_test_deploy.env
+        - script: echo -e "IMAGE_TOMCAT=$IMAGE_REPO_TOMCAT\nIMAGE_TAG_TOMCAT=$IMAGE_TAG" >> $EB_DOCKER_MULTI_CONTAINER_TEST_DEPLOY_STATE/latest_test_deploy.env
 
 # # runCLI job that deploys image in ECR to Elastic Beanstalk
 # # based on previous deployment to TEST environment
@@ -61,14 +63,19 @@ jobs:
 #         # load last build version deployed to test from incoming state file
 #         - script: source $EB_DOCKER_MULTI_CONTAINER_TEST_DEPLOY_STATE/latest_test_deploy.env
 #         # assign Shippable-injected variables to variables used in templates
-#         - script: export ENVIRONMENT=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PROD_PARAMS_ENVIRONMENT PORT=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PARAMS_PORT
+#         - script: >
+#             export 
+              EB_APPLICATION=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PARAMS_AWS_EB_APPLICATION
+#             PORT_NODE=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PARAMS_PORT_NODE
+#             PORT_TOMCAT=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PARAMS_PORT_TOMCAT
+#             ENVIRONMENT=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PROD_PARAMS_ENVIRONMENT 
 #         # update template files with values in env variables
 #         - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE/deploy
 #         - script: echo "updating templates with environment variables"
 #         - script: shippable_replace Dockerrun.aws.json .ebextensions/environmentvariables.config
-#         # initialize eb cli for app eb_docker_multi_container_eb
+#         # initialize eb cli for app eb_docker_multi_container
 #         - script: echo "initializing EB"
-#         - script: eb init eb_docker_multi_container_eb --platform docker-1.12.6 --region us-east-1 --keyname kp-us-east-1
+#         - script: eb init eb-docker-multi-container --platform docker-1.12.6 --region us-east-1 --keyname kp-us-east-1
 #         # deploy latest image to elastic beanstalk
 #         - script: echo "Deploying new version to Elastic Beanstalk"
 #         - script: eb deploy $EB_DOCKER_MULTI_CONTAINER_PARAMS_PROD_PARAMS_AWS_ENVIRONMENT

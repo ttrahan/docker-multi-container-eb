@@ -39,7 +39,7 @@ resources:
     type: params
     version:
       params:
-        AWS_EB_APPLICATION: "eb_docker_multi_container_eb"
+        AWS_EB_APPLICATION: "eb_docker_multi_container"
         PORT_NODE: 80
         PORT_TOMCAT: 8080
 
@@ -49,7 +49,7 @@ resources:
     version:
       params:
         ENVIRONMENT: "test"
-        AWS_EB_ENVIRONMENT: "docker-multi-container-test"
+        AWS_EB_ENVIRONMENT: "us-east-test"
 
 # params for PROD environment 
   - name: eb_docker_multi_container_params_prod
@@ -57,5 +57,5 @@ resources:
     version:
       params:
         ENVIRONMENT: "prod"
-        AWS_EB_ENVIRONMENT: "docker-multi-container-prod"
+        AWS_EB_ENVIRONMENT: "us-east-prod"
 
