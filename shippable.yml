@@ -7,8 +7,8 @@ env:
   global:
     # replace with your docker registry account name (e.g. Amazon ECR)
     - DOCKER_ACC=288971733297.dkr.ecr.us-east-1.amazonaws.com
-    - DOCKER_REPO_NODE_APP=eb-docker-multiple-container-node
-    - DOCKER_REPO_TOMCAT_APP=eb-docker-multiple-container-tomcat
+    - DOCKER_REPO_NODE_APP=eb-docker-multi-container-node
+    - DOCKER_REPO_TOMCAT_APP=eb-docker-multi-container-tomcat
     - AWS_DEFAULT_REGION=us-east-1
     - IMAGE_TAG=$BRANCH.$BUILD_NUMBER
 
