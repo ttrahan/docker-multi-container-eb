@@ -3,7 +3,7 @@ jobs:
 ######################### NATIVE WAR CI/CD JOBS #########################
 
 # runCI job that builds and pushes artifact to S3
-  - name: docker-multi-container-runcli-elasticbeanstalk_runCI
+  - name: docker-multi-container-eb_runCI
     type: runCI
     steps:
       - OUT: docker_multi_container_eb_img
@@ -20,9 +20,17 @@ jobs:
       - IN: docker_multi_container_eb_params_test
       - TASK:
         # assign Shippable-injected variables to variables used in templates
-        - script: export ENVIRONMENT=$DEMO_JAVA_ECR_PARAMS_TEST_PARAMS_ENVIRONMENT PORT=$DEMO_JAVA_ECR_PARAMS_PARAMS_PORT IMAGE_REPO=$DEMO_JAVA_ECR_IMG_SOURCENAME IMAGE_TAG=$DEMO_JAVA_ECR_IMG_VERSIONNAME
+        - script: >
+          export 
+          IMAGE_REPO_NODE=$DOCKER_MULTI_CONTAINER_EB_IMG_NODE_SOURCENAME 
+          IMAGE_TAG_NODE=$DOCKER_MULTI_CONTAINER_EB_IMG_NODE_VERSIONNAME
+          IMAGE_REPO_TOMCAT=$DOCKER_MULTI_CONTAINER_EB_IMG_TOMCAT_SOURCENAME 
+          IMAGE_TAG_TOMCAT=$DOCKER_MULTI_CONTAINER_EB_IMG_TOMCAT_VERSIONNAME
+          ENVIRONMENT=$DOCKER_MULTI_CONTAINER_EB_PARAMS_TEST_PARAMS_ENVIRONMENT 
+          PORT_NODE=$DOCKER_MULTI_CONTAINER_EB_PARAMS_PORT_NODE
+          PORT_TOMCAT=$DOCKER_MULTI_CONTAINER_EB_PARAMS_PORT_TOMCAT
         # update template files with values in env variables
-        - script: cd $DEMO_JAVA_ECR_GITREPO_STATE/deploy
+        - script: cd $DOCKER_MULTI_CONTAINER_EB_GITREPO_STATE/deploy
         - script: pwd
         - script: echo "updating templates with environment variables"
         - script: shippable_replace Dockerrun.aws.json .ebextensions/environmentvariables.config
@@ -31,9 +39,9 @@ jobs:
         - script: eb init docker_multi_container_eb --platform docker-1.12.6 --region us-east-1 --keyname kp-us-east-1
         # deploy latest image to elastic beanstalk
         - script: echo "Deploying new version to Elastic Beanstalk"
-        - script: eb deploy $DEMO_JAVA_ECR_PARAMS_TEST_PARAMS_AWS_EB_ENVIRONMENT
+        - script: eb deploy $DOCKER_MULTI_CONTAINER_EB_PARAMS_TEST_PARAMS_AWS_EB_ENVIRONMENT
         # save latest deployment to state
-        - script: echo -e "IMAGE_REPO=$IMAGE_REPO\nIMAGE_TAG=$IMAGE_TAG" >> $DEMO_JAVA_ECR_TEST_DEPLOY_STATE/latest_test_deploy.env
+        - script: echo -e "IMAGE_REPO=$IMAGE_REPO\nIMAGE_TAG=$IMAGE_TAG" >> $DOCKER_MULTI_CONTAINER_EB_TEST_DEPLOY_STATE/latest_test_deploy.env
 
 # # runCLI job that deploys image in ECR to Elastic Beanstalk
 # # based on previous deployment to TEST environment
@@ -49,11 +57,11 @@ jobs:
 #       - IN: docker_multi_container_eb_params_prod
 #       - TASK:
 #         # load last build version deployed to test from incoming state file
-#         - script: source $DEMO_JAVA_ECR_TEST_DEPLOY_STATE/latest_test_deploy.env
+#         - script: source $DOCKER_MULTI_CONTAINER_EB_TEST_DEPLOY_STATE/latest_test_deploy.env
 #         # assign Shippable-injected variables to variables used in templates
-#         - script: export ENVIRONMENT=$DEMO_JAVA_ECR_PARAMS_PROD_PARAMS_ENVIRONMENT PORT=$DEMO_JAVA_ECR_PARAMS_PARAMS_PORT
+#         - script: export ENVIRONMENT=$DOCKER_MULTI_CONTAINER_EB_PARAMS_PROD_PARAMS_ENVIRONMENT PORT=$DOCKER_MULTI_CONTAINER_EB_PARAMS_PARAMS_PORT
 #         # update template files with values in env variables
-#         - script: cd $DEMO_JAVA_ECR_GITREPO_STATE/deploy
+#         - script: cd $DOCKER_MULTI_CONTAINER_EB_GITREPO_STATE/deploy
 #         - script: echo "updating templates with environment variables"
 #         - script: shippable_replace Dockerrun.aws.json .ebextensions/environmentvariables.config
 #         # initialize eb cli for app docker_multi_container_eb
@@ -61,5 +69,5 @@ jobs:
 #         - script: eb init docker_multi_container_eb --platform docker-1.12.6 --region us-east-1 --keyname kp-us-east-1
 #         # deploy latest image to elastic beanstalk
 #         - script: echo "Deploying new version to Elastic Beanstalk"
-#         - script: eb deploy $DEMO_JAVA_ECR_PARAMS_PROD_PARAMS_AWS_EB_ENVIRONMENT
+#         - script: eb deploy $DOCKER_MULTI_CONTAINER_EB_PARAMS_PROD_PARAMS_AWS_EB_ENVIRONMENT
 #

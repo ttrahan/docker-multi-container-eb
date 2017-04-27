@@ -3,12 +3,12 @@
   "containerDefinitions": [
     {
       "name": "node-app",
-      "image": "$DOCKER_ACCOUNT/$DOCKER_REPO_NODE_APP:$IMAGE_TAG",
+      "image": "$IMAGE_REPO_NODE:$IMAGE_TAG_NODE",
       "essential": true,
       "memory": 128,
       "portMappings": [
         {
-          "hostPort": 80,
+          "hostPort": ${PORT_NODE},
           "containerPort": 8000
         }
       ],
@@ -25,12 +25,12 @@
     },
     {
       "name": "tomcat-app",
-      "image": "$DOCKER_ACCOUNT/$DOCKER_REPO_TOMCAT_APP:$IMAGE_TAG",
+      "image": "$IMAGE_REPO_TOMCAT:$IMAGE_TAG_TOMCAT",
       "essential": true,
       "memory": 256,
       "portMappings": [
         {
-          "hostPort": 8080,
+          "hostPort": ${PORT_TOMCAT},
           "containerPort": 8080
         }
       ],
