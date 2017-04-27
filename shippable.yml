@@ -7,23 +7,24 @@ env:
   global:
     # replace with your docker registry account name (e.g. Amazon ECR)
     - DOCKER_ACC=288971733297.dkr.ecr.us-east-1.amazonaws.com
-    - DOCKER_REPO_NODE_APP=docker-multiple-container-eb-node
-    - DOCKER_REPO_TOMCAT_APP=docker-multiple-container-eb-tomcat
+    - DOCKER_REPO_NODE_APP=eb-docker-multiple-container-node
+    - DOCKER_REPO_TOMCAT_APP=eb-docker-multiple-container-tomcat
     - AWS_DEFAULT_REGION=us-east-1
+    - IMAGE_TAG=$BRANCH.$BUILD_NUMBER
 
 build:
   ci:
     # build docker images and push to registry
     # Node app
-    - docker build -t $DOCKER_ACC/$DOCKER_REPO_NODE_APP:$BRANCH.$BUILD_NUMBER $SHIPPABLE_BUILD_DIR/node-app
-    - docker push $DOCKER_ACC/$DOCKER_REPO_NODE_APP:$BRANCH.$BUILD_NUMBER
+    - docker build -t $DOCKER_ACC/$DOCKER_REPO_NODE_APP:$IMAGE_TAG $SHIPPABLE_BUILD_DIR/node-app
+    - docker push $DOCKER_ACC/$DOCKER_REPO_NODE_APP:$IMAGE_TAG
     # Tomcat app
-    - docker build -t $DOCKER_ACC/$DOCKER_REPO_TOMCAT_APP:$BRANCH.$BUILD_NUMBER $SHIPPABLE_BUILD_DIR/tomcat-app
-    - docker push $DOCKER_ACC/$DOCKER_REPO_TOMCAT_APP:$BRANCH.$BUILD_NUMBER
+    - docker build -t $DOCKER_ACC/$DOCKER_REPO_TOMCAT_APP:$IMAGE_TAG $SHIPPABLE_BUILD_DIR/tomcat-app
+    - docker push $DOCKER_ACC/$DOCKER_REPO_TOMCAT_APP:$IMAGE_TAG
 
   on_success:
     # save latest image versions to state
-    - echo versionName=$BRANCH.$BUILD_NUMBER > /build/state/docker_multi_container_eb_img.env
+    - echo versionName=$BRANCH.$BUILD_NUMBER > /build/state/eb_docker_multi_container_img.env
 
 integrations:
   hub:

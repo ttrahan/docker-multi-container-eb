@@ -1,6 +1,6 @@
 resources:
 # gitRepo for scripts/config files
-  - name: docker_multi_container_eb_gitrepo
+  - name: eb_docker_multi_container_gitrepo
     type: gitRepo
     integration: ttrahan-gh
     pointer:
@@ -8,7 +8,7 @@ resources:
       branch: master
   
 # docker image resource NODE APP
-  - name: docker_multi_container_eb_img_node
+  - name: eb_docker_multi_container_img_node
     type: image
     integration: ttrahan-ecr
     pointer:
@@ -18,7 +18,7 @@ resources:
       versionName: master.5
 
 # docker image resource TOMCAT APP
-  - name: docker_multi_container_eb_img_tomcat
+  - name: eb_docker_multi_container_img_tomcat
     type: image
     integration: ttrahan-ecr
     pointer:
@@ -28,23 +28,23 @@ resources:
       versionName: master.5
 
 # aws CLI config
-  - name: docker_multi_container_eb_awscli
+  - name: eb_docker_multi_container_awscli
     type: cliConfig
     integration: ttrahan-aws
     pointer:
       region: us-east-1
 
 # params shared across for all environments 
-  - name: docker_multi_container_eb_params
+  - name: eb_docker_multi_container_params
     type: params
     version:
       params:
-        AWS_EB_APPLICATION: "docker_multi_container_eb"
+        AWS_EB_APPLICATION: "eb_docker_multi_container_eb"
         PORT_NODE: 80
         PORT_TOMCAT: 8080
 
 # params for TEST environment 
-  - name: docker_multi_container_eb_params_test
+  - name: eb_docker_multi_container_params_test
     type: params
     version:
       params:
@@ -52,7 +52,7 @@ resources:
         AWS_EB_ENVIRONMENT: "docker-multi-container-test"
 
 # params for PROD environment 
-  - name: docker_multi_container_eb_params_prod
+  - name: eb_docker_multi_container_params_prod
     type: params
     version:
       params:
