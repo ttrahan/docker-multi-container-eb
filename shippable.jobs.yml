@@ -33,7 +33,7 @@ jobs:
             PORT_TOMCAT=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PORT_TOMCAT
             ENVIRONMENT=$EB_DOCKER_MULTI_CONTAINER_PARAMS_TEST_PARAMS_ENVIRONMENT
         # update template files with values in env variables
-        - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE/deploy
+        - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE
         - script: pwd
         - script: echo "updating templates with environment variables"
         - script: shippable_replace Dockerrun.aws.json .ebextensions/elb-listeners.config
@@ -70,7 +70,7 @@ jobs:
             PORT_TOMCAT=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PARAMS_PORT_TOMCAT
             ENVIRONMENT=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PROD_PARAMS_ENVIRONMENT 
         # update template files with values in env variables
-        - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE/deploy
+        - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE
         - script: echo "updating templates with environment variables"
         - script: shippable_replace Dockerrun.aws.json .ebextensions/elb-listeners.config
         # initialize eb cli for app eb_docker_multi_container
