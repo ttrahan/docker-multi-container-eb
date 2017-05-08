@@ -57,5 +57,5 @@ resources:
     version:
       params:
         ENVIRONMENT: "prod"
-        AWS_EB_ENVIRONMENT: "prod"
+        AWS_EB_ENVIRONMENT: "prod-02"
 
