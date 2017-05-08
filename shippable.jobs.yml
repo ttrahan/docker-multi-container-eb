@@ -36,7 +36,7 @@ jobs:
         - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE
         - script: pwd
         - script: echo "updating templates with environment variables"
-        - script: shippable_replace Dockerrun.aws.json .ebextensions/elb-listeners.config
+        - script: shippable_replace Dockerrun.aws.json
         # initialize eb cli for app eb_docker_multi_container_eb
         - script: echo "initializing EB"
         - script: eb init $EB_APPLICATION --platform docker-1.12.6 --region us-east-1 --keyname kp-us-east-1
@@ -72,7 +72,7 @@ jobs:
         # update template files with values in env variables
         - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE
         - script: echo "updating templates with environment variables"
-        - script: shippable_replace Dockerrun.aws.json .ebextensions/elb-listeners.config
+        - script: shippable_replace Dockerrun.aws.json
         # initialize eb cli for app eb_docker_multi_container
         - script: echo "initializing EB"
         - script: eb init eb-docker-multi-container --platform docker-1.12.6 --region us-east-1 --keyname kp-us-east-1
