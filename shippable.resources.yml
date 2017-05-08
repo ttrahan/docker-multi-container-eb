@@ -49,7 +49,7 @@ resources:
     version:
       params:
         ENVIRONMENT: "test"
-        AWS_EB_ENVIRONMENT: "test"
+        AWS_EB_ENVIRONMENT: "test-02"
 
 # params for PROD environment 
   - name: eb_docker_multi_container_params_prod
