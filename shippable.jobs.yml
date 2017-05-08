@@ -1,6 +1,6 @@
 jobs:
 
-######################### NATIVE WAR CI/CD JOBS #########################
+######################### CI/CD JOBS #########################
 
 # runCI job that builds and pushes artifact to S3
   - name: eb-docker-multi-container_runCI
@@ -36,7 +36,7 @@ jobs:
         - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE/deploy
         - script: pwd
         - script: echo "updating templates with environment variables"
-        - script: shippable_replace Dockerrun.aws.json .ebextensions/environmentvariables.config
+        - script: shippable_replace Dockerrun.aws.json .ebextensions/elb-listeners.config
         # initialize eb cli for app eb_docker_multi_container_eb
         - script: echo "initializing EB"
         - script: eb init $EB_APPLICATION --platform docker-1.12.6 --region us-east-1 --keyname kp-us-east-1
@@ -72,7 +72,7 @@ jobs:
         # update template files with values in env variables
         - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE/deploy
         - script: echo "updating templates with environment variables"
-        - script: shippable_replace Dockerrun.aws.json .ebextensions/environmentvariables.config
+        - script: shippable_replace Dockerrun.aws.json .ebextensions/elb-listeners.config
         # initialize eb cli for app eb_docker_multi_container
         - script: echo "initializing EB"
         - script: eb init eb-docker-multi-container --platform docker-1.12.6 --region us-east-1 --keyname kp-us-east-1
