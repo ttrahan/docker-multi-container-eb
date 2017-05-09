@@ -52,8 +52,8 @@ jobs:
         - script: echo "Deploying new version to Elastic Beanstalk"
         - script: eb deploy --debug $EB_DOCKER_MULTI_CONTAINER_PARAMS_TEST_PARAMS_AWS_EB_ENVIRONMENT
         # save latest deployment to state
-        - script: echo -e "IMAGE_NODE=$IMAGE_REPO_NODE\nIMAGE_TAG_NODE=$IMAGE_TAG" >> $EB_DOCKER_MULTI_CONTAINER_TEST_DEPLOY_STATE/latest_test_deploy.env
-        - script: echo -e "IMAGE_TOMCAT=$IMAGE_REPO_TOMCAT\nIMAGE_TAG_TOMCAT=$IMAGE_TAG" >> $EB_DOCKER_MULTI_CONTAINER_TEST_DEPLOY_STATE/latest_test_deploy.env
+        - script: echo -e "export IMAGE_NODE=$IMAGE_REPO_NODE\nexport IMAGE_TAG_NODE=$IMAGE_TAG" >> $EB_DOCKER_MULTI_CONTAINER_TEST_DEPLOY_STATE/latest_test_deploy.env
+        - script: echo -e "export IMAGE_TOMCAT=$IMAGE_REPO_TOMCAT\nexport IMAGE_TAG_TOMCAT=$IMAGE_TAG" >> $EB_DOCKER_MULTI_CONTAINER_TEST_DEPLOY_STATE/latest_test_deploy.env
 
 # runCLI job that deploys image in ECR to Elastic Beanstalk
 # based on previous deployment to TEST environment
@@ -74,8 +74,6 @@ jobs:
         - script: >
             export 
             EB_APPLICATION=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PARAMS_AWS_EB_APPLICATION
-            PORT_NODE=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PARAMS_PORT_NODE
-            PORT_TOMCAT=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PARAMS_PORT_TOMCAT
             ENVIRONMENT=$EB_DOCKER_MULTI_CONTAINER_PARAMS_PROD_PARAMS_ENVIRONMENT 
         # update template files with values in env variables
         - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE
