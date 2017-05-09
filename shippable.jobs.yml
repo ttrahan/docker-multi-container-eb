@@ -36,7 +36,7 @@ jobs:
         # update template files with values in env variables
         - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE
         - script: echo "updating templates with environment variables"
-        - script: printenv > tmp | sort tmp | cat tmp
+        - script: printenv
         - script: shippable_replace Dockerrun.aws.json
         - script: cat Dockerrun.aws.json
         # initialize eb cli for app eb_docker_multi_container_eb
