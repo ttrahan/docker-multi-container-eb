@@ -52,8 +52,8 @@ jobs:
         - script: echo "Deploying new version to Elastic Beanstalk"
         - script: eb deploy --debug $EB_DOCKER_MULTI_CONTAINER_PARAMS_TEST_PARAMS_AWS_EB_ENVIRONMENT
         # save latest deployment to state
-        - script: echo -e "export IMAGE_NODE=$IMAGE_REPO_NODE\nexport IMAGE_TAG_NODE=$IMAGE_TAG" >> $EB_DOCKER_MULTI_CONTAINER_TEST_DEPLOY_STATE/latest_test_deploy.env
-        - script: echo -e "export IMAGE_TOMCAT=$IMAGE_REPO_TOMCAT\nexport IMAGE_TAG_TOMCAT=$IMAGE_TAG" >> $EB_DOCKER_MULTI_CONTAINER_TEST_DEPLOY_STATE/latest_test_deploy.env
+        - script: echo -e "export IMAGE_NODE=$IMAGE_REPO_NODE\nexport IMAGE_TAG_NODE=$IMAGE_TAG_NODE" >> $EB_DOCKER_MULTI_CONTAINER_TEST_DEPLOY_STATE/latest_test_deploy.env
+        - script: echo -e "export IMAGE_TOMCAT=$IMAGE_REPO_TOMCAT\nexport IMAGE_TAG_TOMCAT=$IMAGE_TAG_TOMCAT" >> $EB_DOCKER_MULTI_CONTAINER_TEST_DEPLOY_STATE/latest_test_deploy.env
 
 # runCLI job that deploys image in ECR to Elastic Beanstalk
 # based on previous deployment to TEST environment
@@ -70,6 +70,8 @@ jobs:
       - TASK:
         # load last build version deployed to test from incoming state file
         - script: source $EB_DOCKER_MULTI_CONTAINER_TEST_DEPLOY_STATE/latest_test_deploy.env
+        - script: cat $EB_DOCKER_MULTI_CONTAINER_TEST_DEPLOY_STATE/latest_test_deploy.env
+        - script: echo $IMAGE_TOMCAT $IMAGE_TAG_TOMCAT
         # assign Shippable-injected variables to variables used in templates
         - script: >
             export 
