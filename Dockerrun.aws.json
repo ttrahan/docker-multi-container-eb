@@ -8,7 +8,7 @@
       "memory": 128,
       "portMappings": [
         {
-          "hostPort": ${PORT_NODE},
+          "hostPort": 8000,
           "containerPort": 8000
         }
       ],
@@ -21,7 +21,7 @@
       "memory": 256,
       "portMappings": [
         {
-          "hostPort": ${PORT_TOMCAT},
+          "hostPort": 8080,
           "containerPort": 8080
         }
       ],
@@ -29,3 +29,4 @@
     }
   ]
 }
+
