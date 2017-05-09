@@ -13,7 +13,7 @@ resources:
     integration: ttrahan-ecr
     pointer:
       # replace with your docker registry URI
-      sourceName: 288971733297.dkr.ecr.us-east-1.amazonaws.com/docker-multi-container-eb-node
+      sourceName: 288971733297.dkr.ecr.us-east-1.amazonaws.com/eb-docker-multi-container-node
     seed:
       versionName: master.5
 
@@ -23,7 +23,7 @@ resources:
     integration: ttrahan-ecr
     pointer:
       # replace with your docker registry URI
-      sourceName: 288971733297.dkr.ecr.us-east-1.amazonaws.com/docker-multi-container-eb-tomcat
+      sourceName: 288971733297.dkr.ecr.us-east-1.amazonaws.com/eb-docker-multi-container-tomcat
     seed:
       versionName: master.5
 
