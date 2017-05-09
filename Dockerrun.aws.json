@@ -1,4 +1,4 @@
-
+{
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
@@ -12,16 +12,7 @@
           "containerPort": 8000
         }
       ],
-      "command": [
-        "/bin/bash",
-        "/usr/src/app/run.sh"
-      ],
-      "mountPoints": [
-        {
-          "sourceVolume": "node-app",
-          "containerPath": "/usr/src/app"
-        }
-      ]
+      "mountPoints": []
     },
     {
       "name": "tomcat-app",
@@ -34,6 +25,10 @@
           "containerPort": 8080
         }
       ],
+      "links": [
+        "node-app"
+      ],
+      "mountPoints": []
     }
   ]
 }
