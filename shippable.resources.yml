@@ -39,7 +39,7 @@ resources:
     type: params
     version:
       params:
-        AWS_EB_APPLICATION: "eb_docker_multi_container"
+        AWS_EB_APPLICATION: "eb-docker-multi-container"
         PORT_NODE: 80
         PORT_TOMCAT: 8080
 
