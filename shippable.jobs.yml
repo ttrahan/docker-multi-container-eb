@@ -39,7 +39,7 @@ jobs:
         - script: shippable_replace Dockerrun.aws.json
         # eb deploy uses latest commits only, so commit updated Dockerrun.aws.json
         - script: |
-            git add
+            git add Dockerrun.aws.json
             git commit -m 'updated Dockerrun.aws.json template' Dockerrun.aws.json
         # initialize eb cli for app eb_docker_multi_container
         - script: echo "initializing EB"
@@ -83,7 +83,7 @@ jobs:
         - script: shippable_replace Dockerrun.aws.json
         # eb deploy uses latest commits only, so commit updated Dockerrun.aws.json
         - script: |
-            git add
+            git add Dockerrun.aws.json
             git commit -m 'updated Dockerrun.aws.json template' Dockerrun.aws.json
         # initialize eb cli for app eb_docker_multi_container
         - script: echo "initializing EB"
