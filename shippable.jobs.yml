@@ -35,12 +35,13 @@ jobs:
             ENVIRONMENT=$EB_DOCKER_MULTI_CONTAINER_PARAMS_TEST_PARAMS_ENVIRONMENT
         # update template files with values in env variables
         - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE
-        - script: pwd
         - script: echo "updating templates with environment variables"
         - script: shippable_replace Dockerrun.aws.json
         # initialize eb cli for app eb_docker_multi_container_eb
         - script: echo "initializing EB"
         - script: eb init $EB_APPLICATION --platform docker-1.12.6 --region us-east-1 --keyname kp-us-east-1
+        - script: ls .elasticbeanstalk
+        - script: cat .elasticbeanstalk/config.yml 
         # deploy latest image to elastic beanstalk
         - script: echo "Deploying new version to Elastic Beanstalk"
         - script: eb deploy $EB_DOCKER_MULTI_CONTAINER_PARAMS_TEST_PARAMS_AWS_EB_ENVIRONMENT
