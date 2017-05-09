@@ -2,9 +2,11 @@ resources:
 # gitRepo for scripts/config files
   - name: eb_docker_multi_container_gitrepo
     type: gitRepo
-    integration: ttrahan-gh
+    # replace with your SCM integration, e.g. GitHub
+    integration: ttrahan-gh 
     pointer:
-      sourceName: ttrahan/docker-multi-container-eb
+      # replace with your git repo account
+      sourceName: ttrahan/docker-multi-container-eb 
       branch: master
   
 # docker image resource NODE APP
@@ -20,7 +22,8 @@ resources:
 # docker image resource TOMCAT APP
   - name: eb_docker_multi_container_img_tomcat
     type: image
-    integration: ttrahan-ecr
+    # replace with your ECR integration 
+    integration: ttrahan-ecr 
     pointer:
       # replace with your docker registry URI
       sourceName: 288971733297.dkr.ecr.us-east-1.amazonaws.com/eb-docker-multi-container-tomcat
@@ -30,7 +33,8 @@ resources:
 # aws CLI config
   - name: eb_docker_multi_container_awscli
     type: cliConfig
-    integration: ttrahan-aws
+    # replace with your AWS integration
+    integration: ttrahan-aws 
     pointer:
       region: 1
 
@@ -39,9 +43,8 @@ resources:
     type: params
     version:
       params:
-        AWS_EB_APPLICATION: "eb-docker-multi-container"
-        PORT_NODE: 80
-        PORT_TOMCAT: 8080
+        # replace with your application name
+        AWS_EB_APPLICATION: "eb-docker-multi-container" 
 
 # params for TEST environment 
   - name: eb_docker_multi_container_params_test
@@ -49,7 +52,8 @@ resources:
     version:
       params:
         ENVIRONMENT: "test"
-        AWS_EB_ENVIRONMENT: "test-02"
+        # replace with your environment name
+        AWS_EB_ENVIRONMENT: "test-02" 
 
 # params for PROD environment 
   - name: eb_docker_multi_container_params_prod
@@ -57,5 +61,6 @@ resources:
     version:
       params:
         ENVIRONMENT: "prod"
+        # replace with your environment name
         AWS_EB_ENVIRONMENT: "prod-02"
 
