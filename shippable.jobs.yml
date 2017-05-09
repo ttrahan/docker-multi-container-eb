@@ -37,10 +37,17 @@ jobs:
         - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE
         - script: echo "updating templates with environment variables"
         - script: shippable_replace Dockerrun.aws.json
-        - script: git add && git commit -m 'updated Dockerrun.aws.json template' Dockerrun.aws.json
-        # initialize eb cli for app eb_docker_multi_container_eb
+        # eb deploy uses latest commits only, so commit updated Dockerrun.aws.json
+        - script: |
+            git add
+            git commit -m 'updated Dockerrun.aws.json template' Dockerrun.aws.json
+        # initialize eb cli for app eb_docker_multi_container
         - script: echo "initializing EB"
-        - script: eb init $EB_APPLICATION --platform docker-1.12.6 --region us-east-1 --keyname kp-us-east-1
+        - script: >
+            eb init eb-docker-multi-container
+            --platform docker-1.12.6
+            --region us-east-1
+            --keyname kp-us-east-1
         # deploy latest image to elastic beanstalk
         - script: echo "Deploying new version to Elastic Beanstalk"
         - script: eb deploy --debug $EB_DOCKER_MULTI_CONTAINER_PARAMS_TEST_PARAMS_AWS_EB_ENVIRONMENT
@@ -74,9 +81,17 @@ jobs:
         - script: cd $EB_DOCKER_MULTI_CONTAINER_GITREPO_STATE
         - script: echo "updating templates with environment variables"
         - script: shippable_replace Dockerrun.aws.json
+        # eb deploy uses latest commits only, so commit updated Dockerrun.aws.json
+        - script: |
+            git add
+            git commit -m 'updated Dockerrun.aws.json template' Dockerrun.aws.json
         # initialize eb cli for app eb_docker_multi_container
         - script: echo "initializing EB"
-        - script: eb init eb-docker-multi-container --platform docker-1.12.6 --region us-east-1 --keyname kp-us-east-1
+        - script: >
+            eb init eb-docker-multi-container
+            --platform docker-1.12.6
+            --region us-east-1
+            --keyname kp-us-east-1
         # deploy latest image to elastic beanstalk
         - script: echo "Deploying new version to Elastic Beanstalk"
         - script: eb deploy $EB_DOCKER_MULTI_CONTAINER_PARAMS_PROD_PARAMS_AWS_EB_ENVIRONMENT
