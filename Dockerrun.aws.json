@@ -25,6 +25,9 @@
           "containerPort": 8080
         }
       ],
+      "links": [
+        "node-app"
+      ],
       "mountPoints": []
     }
   ]
