@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "node-app",
-      "image": "$IMAGE_REPO_NODE:$IMAGE_TAG_NODE",
+      "image": "288971733297.dkr.ecr.us-east-1.amazonaws.com/docker-multi-container-eb-node:master.14",
       "essential": true,
       "memory": 128,
       "portMappings": [
@@ -16,7 +16,7 @@
     },
     {
       "name": "tomcat-app",
-      "image": "$IMAGE_REPO_TOMCAT:$IMAGE_TAG_TOMCAT",
+      "image": "288971733297.dkr.ecr.us-east-1.amazonaws.com/docker-multi-container-eb-tomcat:master.14",
       "essential": true,
       "memory": 256,
       "portMappings": [
@@ -29,4 +29,3 @@
     }
   ]
 }
-
