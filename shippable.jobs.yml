@@ -14,6 +14,7 @@ jobs:
     type: runCLI
     steps:
       - IN: eb_docker_multi_container_img_node
+        switch: off
       - IN: eb_docker_multi_container_img_tomcat
       - IN: eb_docker_multi_container_awscli
       - IN: eb_docker_multi_container_gitrepo
